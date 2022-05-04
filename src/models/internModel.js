@@ -17,7 +17,7 @@ const internSchema = new mongoose.Schema(
         type:Number,
         unique:true,
         required:true['Mobile is Required within 10 digits only'],
-        max:10
+        maxlength:10
     },
     collegeId:{
         type:ObjectId,
