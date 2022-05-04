@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 
 const collegeSchema = new mongoose.Schema({
 
-    name: { type: String, required: [true, "Enter your name"], unique: true },
+    name: { type: String, required: [true, "Enter your college name"], unique: true },
 
-    fullName: { type: String, required: [true, "Enter your  fullName"] },
+    fullName: { type: String, required: [true, "Enter your college fullName"] },
 
     logoLink: { type: String, required: [true, "Enter a valid link"] },
 

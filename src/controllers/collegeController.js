@@ -28,16 +28,16 @@ const postCollege = async function (req, res) {
             return res.status(400).send({ status: false, msg: "Invalid request parameters.Please provide college details" })
         }
         if (!isValid(requestBody.name)) {
-            return res.status(400).send({ status: false, msg: "Please provide name" })
+            return res.status(400).send({ status: false, msg: "Please provide college name" })
         }
         if (!isValid(requestBody.fullName)) {
-            return res.status(400).send({ status: false, msg: "Please provide fullName" })
+            return res.status(400).send({ status: false, msg: "Please provide college fullName" })
         }
         if (!isValid(requestBody.logoLink)) {
-            return res.status(400).send({ status: false, msg: "Please provide logoLink" })
+            return res.status(400).send({ status: false, msg: "Please provide college logoLink" })
         }
         if (!isValidURL(requestBody.logoLink)) {
-            return res.status(400).send({ status: false, msg: "Please provide a valid logoLink" })
+            return res.status(400).send({ status: false, msg: "Please provide a valid college logoLink" })
         }
 
         const collegeAlreadyExist = await collegeModel.findOne({ name: requestBody.name })
