@@ -14,7 +14,7 @@ const internSchema = new mongoose.Schema(
         required:true['Email is Required']
     },
     mobile:{
-        type:String,
+        type:Number,
         unique:true,
         required:true['Mobile is Required within 10 digits only'],
         max:10
