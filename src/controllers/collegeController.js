@@ -1,5 +1,5 @@
 const collegeModel = require('../models/collegeModel')
-
+const internModel = require('../models/internModel')
 
 const isValid = function (value) {
     if (typeof value === "undefined" || typeof value === null) return false
@@ -53,6 +53,38 @@ const postCollege = async function (req, res) {
 }
 
 
+const getCollegeDetails =  async function (req, res){
+    try{
+        let requestQuery = req.query
+        if(!isValidRequestBody(requestQuery)){
+            return res.status(400).send({status:false, msg:"Provide a query collegeName"})
+        }
+        if(Object.keys(requestQuery).length>1)return res.status(400).send({status:false, msg:"Invalid Request.Single query collegeName is available"})
+        let collegeName = requestQuery.collegeName
+        
+        let collegeFromQueryData = await collegeModel.findOne({name:collegeName})
+        
+        if(Object.keys(collegeFromQueryData).length===0)return res.status(404).send({status:false,msg:"College details not found"}) 
+        
+        let collegeFromQueryDataId = collegeFromQueryData._id.toString()
 
+        let internForQueryCollege = await internModel.find({collegeId:collegeFromQueryDataId})
+        if(Object.keys(internForQueryCollege).length===0)return res.status(404).send({status:false,msg:`Intern details not found for ${collegeName} `})
+        
+        
+        let resultData={}
+        resultData["name"]=collegeFromQueryData.name
+        resultData["fullName"]=collegeFromQueryData.fullName
+        resultData["logoLink"]=collegeFromQueryData.logoLink
+        resultData["interest"]=internForQueryCollege
+
+        res.status(200).send({status:true,data:resultData}) 
+
+    }
+    catch(error){
+        res.status(500).send({status:false, msg: error.message})
+    }
+}
 
 module.exports.postCollege = postCollege
+module.exports.getCollegeDetails = getCollegeDetails

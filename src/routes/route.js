@@ -7,7 +7,7 @@ const collegeController = require('../controllers/collegeController')
 router.post("/functionup/colleges", collegeController.postCollege)
 
 
-
+router.get("/functionup/collegeDetails", collegeController.getCollegeDetails)
 
 
 
