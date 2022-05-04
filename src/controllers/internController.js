@@ -1,14 +1,28 @@
 const internModel = require('../models/internModel');
 const collegeModel = require('../models/collegeModel');
 
+const isValid = function (value) {
+    if (typeof value === "undefined" || typeof value === null) return false
+    if (typeof value === "string" && value.trim().length == 0) return false
+    return true
+}
+
+const isValidRequestBody = function (requestBody) {
+    return Object.keys(requestBody).length > 0
+}
+
 const createInter = async function (req, res) {
-    
+
     try {
 
         const internData = req.body;
+        if (!isValidRequestBody(internData)) {
+            return res.status(400).send({ status: false, msg: "Invalid request parameters.Please provide intern details" });
+        }
+
         const { name, mobile, email, collegeName } = internData;
 
-        if (!name) {
+        if (!isValid(name)) {
             return res.status(400).send({ status: false, msg: "Please enter Full Name its a required field!" });
         }
 
@@ -38,15 +52,15 @@ const createInter = async function (req, res) {
             return res.status(409).send({ status: false, msg: "Mobile Number already exists" });
         }
 
-        if (!collegeName) {
+        if (!isValid(collegeName)) {
             return res.status(400).send({ status: false, msg: "Please College Name its a required field!" });
         }
 
         if (collegeName) {
-            
+
             const foundedCollege = await collegeModel.findOne({ name: collegeName });
-            if (!foundedCollege){
-                return res.status(404).send({ status: false, msg: "College Not Found" });  
+            if (!foundedCollege) {
+                return res.status(404).send({ status: false, msg: "College Not Found" });
             }
 
             internData.collegeId = foundedCollege._id;
@@ -54,10 +68,10 @@ const createInter = async function (req, res) {
             return res.status(201).send({ status: true, data: internCreated });
 
         }
-                    
-        }catch (err) {
-    res.status(500).send({ status: false, msg: err.message })
- }
+
+    } catch (err) {
+        res.status(500).send({ status: false, msg: err.message })
+    }
 
 }
 
