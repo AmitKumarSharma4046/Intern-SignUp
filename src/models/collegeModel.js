@@ -1,8 +1,7 @@
-const { links } = require('express/lib/response')
 const mongoose = require('mongoose')
 
 
-const authorSchema = new mongoose.Schema({
+const collegeSchema = new mongoose.Schema({
 
     name: { type: String, required: [true, "Enter your name"], unique: true },
 
@@ -16,4 +15,4 @@ const authorSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('College', authorSchema) //colleges
+module.exports = mongoose.model('College', collegeSchema) //colleges
