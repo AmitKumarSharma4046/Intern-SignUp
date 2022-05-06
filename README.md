@@ -1,2 +1,2 @@
 # Intern-SignUp
-Amit Kumar Sharma , Zuber khan
+Amit Kumar Sharma 
